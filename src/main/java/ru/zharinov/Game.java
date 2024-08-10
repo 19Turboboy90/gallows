@@ -1,5 +1,10 @@
 package main.java.ru.zharinov;
 
+import main.java.ru.zharinov.exception.FileNotFoundException;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
@@ -7,12 +12,9 @@ import java.util.Scanner;
 public class Game {
     private final Scanner console = new Scanner(System.in);
     private final WordStorage wordStorage = WordStorage.getInstance();
-
-    private static final Visualization visualization = Visualization.getVisualization();
     private boolean isStop = true;
-    //    private static final int NUMBER_OF_ATTEMPTS = visualization.image.size();
-//    private int count = NUMBER_OF_ATTEMPTS;
-    private int count = visualization.image.size();
+    private final int NUMBER_OF_ATTEMPTS = 6;
+    private int count = NUMBER_OF_ATTEMPTS;
 
     public void start() {
         while (isStop) {
@@ -28,7 +30,7 @@ public class Game {
                     System.out.print("Введите букву: ");
                     String letter = console.nextLine();
                     if (!randomWord.contains(letter) || letter.length() > 1) {
-                        System.out.println(visualization.image.get(visualization.image.size() - count));
+                        drawImage();
                         count--;
                     }
                     for (int i = 0; i < randomWord.length(); i++) {
@@ -39,7 +41,7 @@ public class Game {
                     }
                     if (Arrays.equals(chars, randomWord.toCharArray())) {
                         System.out.println("Вы выиграли!!!");
-                        count = visualization.image.size();
+                        count = NUMBER_OF_ATTEMPTS;
                         break;
                     }
                     System.out.println(chars);
@@ -51,5 +53,15 @@ public class Game {
                 System.out.println("Игра окончена!");
             }
         }
+    }
+
+    private void drawImage() {
+        String s;
+        try {
+            s = Files.readString(Path.of("src/main/java/ru/zharinov/image/" + count + ".txt"));
+        } catch (IOException e) {
+            throw new FileNotFoundException("File is not found");
+        }
+        System.out.println(s);
     }
 }
