@@ -3,6 +3,15 @@ package main.java.ru.zharinov.words;
 import java.util.*;
 
 public class WordStorage {
+    private final static WordStorage wordStorage = new WordStorage();
+
+    private WordStorage() {
+    }
+
+    public static WordStorage getInstance() {
+        return wordStorage;
+    }
+
     private final List<String> words = List.of("Абаза", "Абака", "Абаси", "Бабай", "Бабах",
             "Баббл", "Вабик", "Вагон", "Вадья", "Гавар", "Гавот", "Газон", "Дабке", "Давёж", "Давка", "Евнух", "Еврей",
             "Жажда", "Жакан", "Жакет", "Забег", "Забив", "Забой", "Иблис", "Иваси", "Ивент", "Йезид", "Йенец", "Йиппи",
