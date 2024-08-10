@@ -1,4 +1,4 @@
-package main.java.ru.zharinov.words;
+package main.java.ru.zharinov;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -7,24 +7,28 @@ import java.util.Scanner;
 public class Game {
     private final Scanner console = new Scanner(System.in);
     private final WordStorage wordStorage = WordStorage.getInstance();
+
+    private static final Visualization visualization = Visualization.getVisualization();
     private boolean isStop = true;
-    private static final int NUMBER_OF_ATTEMPTS = 8;
-    private int count = NUMBER_OF_ATTEMPTS;
+    //    private static final int NUMBER_OF_ATTEMPTS = visualization.image.size();
+//    private int count = NUMBER_OF_ATTEMPTS;
+    private int count = visualization.image.size();
 
     public void start() {
         while (isStop) {
             String randomWord = wordStorage.getRandomWord().toLowerCase(Locale.ROOT);
             char[] chars = randomWord.toCharArray();
             Arrays.fill(chars, '_');
-            System.out.println(randomWord); // Ïðîâåðêà ñëîâà
-            System.out.print("Íà÷àòü íîâóþ èãðó? 'äà' èëè 'âûõîä'-> ");
+            System.out.println(randomWord); // ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÑÐ»Ð¾Ð²Ð°
+            System.out.print("ÐÐ°Ñ‡Ð°Ñ‚ÑŒ Ð½Ð¾Ð²ÑƒÑŽ Ð¸Ð³Ñ€Ñƒ? 'Ð´Ð°' Ð¸Ð»Ð¸ 'Ð²Ñ‹Ñ…Ð¾Ð´'-> ");
             String start = console.nextLine();
-            if (start.equals("äà")) {
-                System.out.println("Ó Âàñ " + count + " ïîïûòîê, ÷òîáû îòãàäàòü ñëîâî.");
+            if (start.equals("Ð´Ð°")) {
+                System.out.println("Ð£ Ð’Ð°Ñ " + count + " Ð¿Ð¾Ð¿Ñ‹Ñ‚Ð¾Ðº, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¾Ñ‚Ð³Ð°Ð´Ð°Ñ‚ÑŒ ÑÐ»Ð¾Ð²Ð¾.");
                 while (count > 0) {
-                    System.out.print("Ââåäèòå áóêâó: ");
+                    System.out.print("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð±ÑƒÐºÐ²Ñƒ: ");
                     String letter = console.nextLine();
                     if (!randomWord.contains(letter) || letter.length() > 1) {
+                        System.out.println(visualization.image.get(visualization.image.size() - count));
                         count--;
                     }
                     for (int i = 0; i < randomWord.length(); i++) {
@@ -34,17 +38,17 @@ public class Game {
                         }
                     }
                     if (Arrays.equals(chars, randomWord.toCharArray())) {
-                        System.out.println("Âû âûèãðàëè!!!");
-                        count = NUMBER_OF_ATTEMPTS;
+                        System.out.println("Ð’Ñ‹ Ð²Ñ‹Ð¸Ð³Ñ€Ð°Ð»Ð¸!!!");
+                        count = visualization.image.size();
                         break;
                     }
                     System.out.println(chars);
-                    System.out.println("îñòàëîñü " + count + " ïîïûòîê");
+                    System.out.println("Ð¾ÑÑ‚Ð°Ð»Ð¾ÑÑŒ " + count + " Ð¿Ð¾Ð¿Ñ‹Ñ‚Ð¾Ðº");
                 }
             }
-            if (start.equals("âûõîä") || count == 0) {
+            if (start.equals("Ð²Ñ‹Ñ…Ð¾Ð´") || count == 0) {
                 isStop = false;
-                System.out.println("Èãðà îêîí÷åíà!");
+                System.out.println("Ð˜Ð³Ñ€Ð° Ð¾ÐºÐ¾Ð½Ñ‡ÐµÐ½Ð°!");
             }
         }
     }
