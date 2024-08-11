@@ -11,17 +11,16 @@ import java.util.Scanner;
 
 public class Game {
     private final Scanner console = new Scanner(System.in);
-    private final WordStorage wordStorage = WordStorage.getInstance();
+    private final WordReader wordReader = WordReader.getInstance();
     private boolean isStop = true;
     private final int NUMBER_OF_ATTEMPTS = 6;
     private int count = NUMBER_OF_ATTEMPTS;
 
     public void start() {
         while (isStop) {
-            String randomWord = wordStorage.getRandomWord().toLowerCase(Locale.ROOT);
+            String randomWord = wordReader.getRandomWord().toLowerCase(Locale.ROOT);
             char[] chars = randomWord.toCharArray();
             Arrays.fill(chars, '_');
-            System.out.println(randomWord); // Проверка слова
             System.out.print("Начать новую игру? 'да' или 'выход'-> ");
             String start = console.nextLine();
             if (start.equals("да")) {
@@ -58,7 +57,7 @@ public class Game {
     private void drawImage() {
         String s;
         try {
-            s = Files.readString(Path.of("src/main/java/ru/zharinov/image/" + count + ".txt"));
+            s = Files.readString(Path.of("src/main/java/ru/zharinov/files/image/" + count + ".txt"));
         } catch (IOException e) {
             throw new FileNotFoundException("File is not found");
         }

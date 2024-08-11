@@ -1,9 +1,7 @@
 package main.java.ru.zharinov;
 
-import java.io.IOException;
-
 public class Runner {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Game game = new Game();
         game.start();
     }
